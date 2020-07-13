@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript" src="message.js"></script>  
+<script type="text/javascript" src="myCtrl.js"></script> 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="style.css">
+<body>
+
+<div class="bg" ng-app="myApp">
+
+    <div  ng-controller="myCtrl">
+        <div class="container">
+            <div class="row">
+                <div class="col btn" ng-click="toggleFilms()">
+                    Films
+                </div>
+                <div class="col btn" ng-click="getPlanets()">
+                Planets
+                </div>
+                <div class="col btn" ng-click="getStarSchips()">
+                Starships
+                </div>
+            </div>
+            <div class="row" ng-show="filmsMenuOpen">
+                <div class="col-4">
+                    <div class = "row">
+                        <div class="col btn" ng-click="getFilms(1)">
+                        A New Hope
+                        </div>
+                        <div class="col btn" ng-click="getFilms(2)">
+                        The Empire Strikes Back
+                        </div>
+                        <div class="col btn"  ng-click="getFilms(3)">
+                        Return of the Jedi
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="container" ng-show="filmsPage">
+                <div class="row">
+                    <div class = "col">
+                        <h1>
+                            {{film.title}}
+                        </h1>
+                        <h2>
+                            Release datum: {{film.releaseDateFilm}}
+                        </h2>
+                        <h2>
+                            Geproduceerd door: {{film.director}}
+                        </h2>
+                        <h2>
+                            karakers:
+                        </h2>
+                        <table>
+                            <tr>
+                                <th>
+                                    Naam
+                                </th>
+                                <th>
+                                    Lengte
+                                </th>
+                                <th>
+                                    Geslacht
+                                </th>
+                                <th>
+                                    Aantal films
+                                </th>
+                            </tr>
+                            <tr ng-repeat="character in film.characters">
+                                <td>
+                                    {{character.name}}
+                                </td>
+                                <td>
+                                    {{character.length}}
+                                </td>
+                                <td>
+                                    {{character.gender}}
+                                </td>
+                                <td>
+                                    {{character.countFilms}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" ng-show="planetPage">
+                <div class="row">
+                    <div class="col">
+                        search: <input type="text" ng-model="planetFilter.name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class = "col">
+                        <table>
+                            <tr>
+                                <th>
+                                    Naam
+                                </th>
+                                <th>
+                                    Lengte van een dag
+                                </th>
+                                <th>
+                                    Lengte van een jaar
+                                </th>
+                                <th>
+                                    Diameter
+                                </th>
+                                <th>
+                                    Klimaat
+                                </th>
+                            </tr>
+                            <tr ng-repeat="planet in planets | filter:planetFilter">
+                                <td>
+                                    {{planet.name}}
+                                </td>
+                                <td>
+                                    {{planet.rotationPeriod}}
+                                </td>
+                                <td>
+                                    {{planet.orbitalPeriod}}
+                                </td>
+                                <td>
+                                    {{planet.diameter}}
+                                </td>
+                                <td>
+                                    {{planet.climate}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" ng-show="starSchipsPage">
+                <div class="row">
+                    <div class="col">
+                        <h1>
+                        star schips
+                        </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class = "col">
+                        <table>
+                            <tr>
+                                <th ng-click="propertyName = 'name'">
+                                    Naam
+                                    <input type="text" ng-model="starshipFilter.name">
+                                </th>
+                                <th ng-click="propertyName = 'model'">
+                                    Model
+                                    <input type="text" ng-model="starshipFilter.model">
+                                </th>
+                                <th ng-click="propertyName = 'cost'">
+                                    Kosten
+                                    <input type="text" ng-model="starshipFilter.cost">
+                                </th>
+                                <th ng-click="propertyName = 'passengers'">
+                                    Passagiers
+                                    <input type="text" ng-model="starshipFilter.passengers">
+                                </th>
+                                <th ng-click="propertyName = 'crew'">
+                                    Personeel
+                                    <input type="text" ng-model="starshipFilter.crew">
+                                </th>
+                            </tr>
+                            <tr ng-repeat="schip in starSchips.ships | filter:starshipFilter | orderBy:propertyName">
+                                <td>
+                                    {{schip.name}}
+                                </td>
+                                <td>
+                                    {{schip.model}}
+                                </td>
+                                <td>
+                                    {{schip.cost}}
+                                </td>
+                                <td>
+                                    {{schip.passengers}}
+                                </td>
+                                <td>
+                                    {{schip.crew}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col btn" ng-click="getStarSchipsPage(starSchips.previous)" ng-show="starSchips.previous">
+                            <<
+                    </div>
+                    <div class="col btn btnDisabeld"  ng-hide="starSchips.previous">
+                            <<
+                    </div>
+                    <div class="col"></div>
+                    <div class="col btn" ng-click="getStarSchipsPage(starSchips.next)" ng-show="starSchips.next">
+                            >>
+                    </div>
+                    <div class="col btn btnDisabeld" ng-hide="starSchips.next">
+                            >>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+        
+</div>
+
+
+
+</body>
+</html>
